@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import './TableRow';
 import TableRow from './TableRow';
 
 class Table extends Component {
@@ -22,7 +21,7 @@ class Table extends Component {
                 <tbody>
                     {
                         files.map((file) =>
-                            <TableRow filename={file} />
+                            <TableRow filename={file} numFiles={files.length} />
                         )
                     }
                 </tbody>
