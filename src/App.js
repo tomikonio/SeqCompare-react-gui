@@ -4,6 +4,15 @@ import './App.css';
 import Table from './Table';
 import DropdownTable from './DropdownTable';
 
+
+class File {
+  constructor(fileName, matchType, orderNumber) {
+      this.fileName = fileName;
+      this.matchType = matchType;
+      this.orderNumber = orderNumber;
+  }
+}
+
 const allFiles = ["hello", "world", "shushu"]
 
 class App extends Component {
@@ -55,3 +64,36 @@ class App extends Component {
 }
 
 export default App;
+
+
+// class Table extends Component {
+//   constructor(props) {
+//       super(props);
+
+//       const filesClassArray = [];
+//       this.props.files.forEach(fileName => {
+//           filesClassArray.push(new File(fileName, "match", "1" ));
+//       });
+
+//       this.state = {
+//           filesState: filesClassArray,
+//       }
+
+//       this.setFileState = this.setFileState.bind(this);
+//   }
+
+//   setFileState(fileName, matchType, orderNumber) {
+
+//       const oldFileArray = [...this.state.filesState];
+
+//       for(let i = 0; i< oldFileArray.length; i++) {
+//           if (this.state.filesState[i].fileName === fileName) {
+//               oldFileArray[i] = { fileName, matchType, orderNumber };
+//               console.log("changed file", oldFileArray[i]);
+//           }
+//       }
+
+//       this.setState({filesState: oldFileArray}, () => {
+//           console.log(this.state.filesState);
+//       });
+//   }
