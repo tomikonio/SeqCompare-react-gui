@@ -17,7 +17,7 @@ class DropDownTable extends Component {
     render() {
         const selectOptions = this.props.selectOptions;
         return (
-            <select defaultValue={this.props.selectOptions[0]} onChange={this.handleChange}>
+            <select defaultValue={this.props.selectOptions[0]} onClick={this.handleChange}>
                 {
                     selectOptions.map((selectOption) => 
                     <option value={selectOption}>
