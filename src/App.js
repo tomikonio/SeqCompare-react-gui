@@ -4,26 +4,31 @@ import './App.css';
 import Table from './Table';
 import DropdownTable from './DropdownTable';
 
+const allFiles = ["hello", "world", "shushu"]
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       //path: "",
-      primaryFile: "",
-      allFiles: ["hello", "world"],   // Need to change this and the secondary one later when connected with the backend.
-      secondaryFiles: ["hello", "world"],
+      // Need to change this and the secondary one later when connected with the backend.
+      primaryFile: allFiles[0],
+      secondaryFiles: this.calcSecondery(),
     };
 
     this.primaryFileSelect = this.primaryFileSelect.bind(this);
   }
 
-  primaryFileSelect(primaryFile) {
-    let index = this.state.allFiles.indexOf(primaryFile);
-    let newSecondary = [...this.state.allFiles];
+  calcSecondery(primaryFile=allFiles[0]) {
+    let index = allFiles.indexOf(primaryFile);
+    let newSecondary = [...allFiles];
     newSecondary.splice(index, 1);
+    return newSecondary
+  }
 
-    this.setState({secondaryFiles: newSecondary, primaryFile});
+  primaryFileSelect(primaryFile) {
+
+    this.setState({secondaryFiles: this.calcSecondery(primaryFile), primaryFile});
   }
 
   render() {
@@ -38,7 +43,7 @@ class App extends Component {
         </p>
         <div className="flex justify-center">
           <label for="primary">Select a primary file</label>
-          <DropdownTable selectOptions={this.state.allFiles} onValueChange={this.primaryFileSelect} id="primary" />
+          <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" />
         </div>
         <br />
         <div className="flex justify-center">
