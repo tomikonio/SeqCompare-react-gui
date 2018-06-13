@@ -6,8 +6,8 @@ class TableRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            matchValue: "",
-            orderValue: "",
+            matchValue: "match",
+            orderValue: "1",
         };
 
         this.onMatchValueChange = this.onMatchValueChange.bind(this);
