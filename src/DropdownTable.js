@@ -4,19 +4,20 @@ import './App.css';
 class DropDownTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {value: this.props.selectOptions[0]};
+        // this.state = {value: this.props.selectOptions[0]};
 
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        //this.setState({value: event.target.value});
+        this.props.onValueChange(event.target.value);
     }
 
     render() {
         const selectOptions = this.props.selectOptions;
         return (
-            <select value={this.state.value} onChange={this.handleChange}>
+            <select defaultValue={this.props.selectOptions[0]} onChange={this.handleChange}>
                 {
                     selectOptions.map((selectOption) => 
                     <option value={selectOption}>
