@@ -50,8 +50,10 @@ class App extends Component {
     let newFileDict = Object.assign({}, this.state.fileDict);
     //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
     for (let file in newFileDict) {
-      if (file.fileName === filename) {
-        newFileDict[file] = {filename, matchType, orderNumber};
+      console.log("file", file['matchType']);
+      if (newFileDict[file].fileName === filename) {
+        newFileDict[file] = new File(filename, matchType, orderNumber);
+        console.log("matchtype: ", matchType);
       }
     }
     this.setState({fileDict: newFileDict}, () => {

@@ -10,6 +10,7 @@ class Table extends Component {
     }
 
     onHandleChange(filename, matchType, orderNumber) {
+        console.log("match", filename, matchType, orderNumber);
         this.props.onValueChange(filename, matchType, orderNumber);
     }
 
