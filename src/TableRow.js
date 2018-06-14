@@ -16,12 +16,12 @@ class TableRow extends Component {
 
     onMatchValueChange(matchValue) {
         this.setState({matchValue});
-        // this.props.onValueChange(this.props.filename, matchValue, this.state.orderValue);
+        this.props.onValueChange(this.props.filename, matchValue, this.state.orderValue);
     }
 
     onOrderValueChange(orderValue) {
         this.setState({orderValue});
-        // this.props.onValueChange(this.props.filename, this.state.matchValue, orderValue);
+        this.props.onValueChange(this.props.filename, this.state.matchValue, orderValue);
     }
 
     render() {

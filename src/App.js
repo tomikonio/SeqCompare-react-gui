@@ -23,21 +23,50 @@ class App extends Component {
       // Need to change this and the secondary one later when connected with the backend.
       primaryFile: allFiles[0],
       secondaryFiles: this.calcSecondery(),
+      fileDict: this.createDict(this.calcSecondery()),
     };
 
     this.primaryFileSelect = this.primaryFileSelect.bind(this);
+    this.tableValueChanged = this.tableValueChanged.bind(this);
+  }
+
+  createDict(secondaryFiles, matchType = "match", orderNumber = "1") {
+    const fileDict = {};
+    for (let filename of secondaryFiles) {
+      fileDict[filename] = new File(filename, matchType, orderNumber);
+    }
+    return fileDict;
   }
 
   calcSecondery(primaryFile=allFiles[0]) {
     let index = allFiles.indexOf(primaryFile);
     let newSecondary = [...allFiles];
     newSecondary.splice(index, 1);
-    return newSecondary
+    return newSecondary;
+  }
+
+  tableValueChanged(filename, matchType, orderNumber) {
+    const primary = this.state.primaryFile;
+    let newFileDict = Object.assign({}, this.state.fileDict);
+    //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
+    for (let file in newFileDict) {
+      if (file.fileName === filename) {
+        newFileDict[file] = {filename, matchType, orderNumber};
+      }
+    }
+    this.setState({fileDict: newFileDict}, () => {
+      console.log("filedict: ", this.state.fileDict);
+    });
   }
 
   primaryFileSelect(primaryFile) {
+    const secondaryCopy = this.calcSecondery(primaryFile);
+    let newFileDict = this.createDict(secondaryCopy);
+    this.setState({secondaryFiles: secondaryCopy,
+      primaryFile: primaryFile,
+      fileDict: newFileDict
+    });
 
-    this.setState({secondaryFiles: this.calcSecondery(primaryFile), primaryFile});
   }
 
   render() {
@@ -56,7 +85,7 @@ class App extends Component {
         </div>
         <br />
         <div className="flex justify-center">
-          <Table files={this.state.secondaryFiles} />
+          <Table files={this.state.secondaryFiles} onValueChange={this.tableValueChanged} />
         </div>
       </div>
     );

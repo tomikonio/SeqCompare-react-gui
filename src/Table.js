@@ -5,6 +5,12 @@ import TableRow from './TableRow';
 class Table extends Component {
     constructor(props) {
         super(props);
+
+        this.onHandleChange = this.onHandleChange.bind(this);
+    }
+
+    onHandleChange(filename, matchType, orderNumber) {
+        this.props.onValueChange(filename, matchType, orderNumber);
     }
 
     render() {
@@ -21,7 +27,7 @@ class Table extends Component {
                 <tbody>
                     {
                         files.map((file) =>
-                            <TableRow filename={file} numFiles={files.length} />
+                            <TableRow filename={file} numFiles={files.length} onValueChange={this.onHandleChange} />
                         )
                     }
                 </tbody>
