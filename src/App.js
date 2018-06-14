@@ -98,7 +98,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="flex justify-center">
-          <label htmlFor="primary">Select a primary file</label>
+          <label htmlFor="primary" className="pa1">Select a primary file:</label>
           <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" resetKey="0" />
         </div>
         <br />
