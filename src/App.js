@@ -24,10 +24,12 @@ class App extends Component {
       primaryFile: allFiles[0],
       secondaryFiles: this.calcSecondery(),
       fileDict: this.createDict(this.calcSecondery()),
+      resetKey: "1",
     };
 
     this.primaryFileSelect = this.primaryFileSelect.bind(this);
-    this.tableValueChanged = this.tableValueChanged.bind(this);
+    this.matchValueChanged = this.matchValueChanged.bind(this);
+    this.orderValueChanged = this.orderValueChanged.bind(this);
   }
 
   createDict(secondaryFiles, matchType = "match", orderNumber = "1") {
@@ -45,15 +47,27 @@ class App extends Component {
     return newSecondary;
   }
 
-  tableValueChanged(filename, matchType, orderNumber) {
+  matchValueChanged(filename, matchType) {
     const primary = this.state.primaryFile;
     let newFileDict = Object.assign({}, this.state.fileDict);
     //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
     for (let file in newFileDict) {
-      console.log("file", file['matchType']);
       if (newFileDict[file].fileName === filename) {
-        newFileDict[file] = new File(filename, matchType, orderNumber);
-        console.log("matchtype: ", matchType);
+        newFileDict[file] = new File(filename, matchType, newFileDict[file].orderNumber);
+      }
+    }
+    this.setState({fileDict: newFileDict}, () => {
+      console.log("filedict: ", this.state.fileDict);
+    });
+  }
+
+  orderValueChanged (filename, orderNumber) {
+    const primary = this.state.primaryFile;
+    let newFileDict = Object.assign({}, this.state.fileDict);
+    //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
+    for (let file in newFileDict) {
+      if (newFileDict[file].fileName === filename) {
+        newFileDict[file] = new File(filename, newFileDict[file].matchType, orderNumber);
       }
     }
     this.setState({fileDict: newFileDict}, () => {
@@ -64,10 +78,12 @@ class App extends Component {
   primaryFileSelect(primaryFile) {
     const secondaryCopy = this.calcSecondery(primaryFile);
     let newFileDict = this.createDict(secondaryCopy);
+    let newResetKey = this.state.resetKey + "1";
     this.setState({secondaryFiles: secondaryCopy,
       primaryFile: primaryFile,
-      fileDict: newFileDict
-    });
+      fileDict: newFileDict,
+      resetKey: newResetKey,
+    }, () => {console.log(this.state.fileDict)});
 
   }
 
@@ -82,12 +98,12 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="flex justify-center">
-          <label for="primary">Select a primary file</label>
-          <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" />
+          <label htmlFor="primary">Select a primary file</label>
+          <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" resetKey="0" />
         </div>
         <br />
         <div className="flex justify-center">
-          <Table files={this.state.secondaryFiles} onValueChange={this.tableValueChanged} />
+          <Table files={this.state.secondaryFiles} onMatchValueChange={this.matchValueChanged} onOrderValueChange={this.orderValueChanged} resetKey={this.state.resetKey} />
         </div>
       </div>
     );

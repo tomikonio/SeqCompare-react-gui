@@ -6,12 +6,17 @@ class Table extends Component {
     constructor(props) {
         super(props);
 
-        this.onHandleChange = this.onHandleChange.bind(this);
+        this.onMatchValueChange = this.onMatchValueChange.bind(this);
+        this.onOrderValueChange = this.onOrderValueChange.bind(this);
     }
 
-    onHandleChange(filename, matchType, orderNumber) {
-        console.log("match", filename, matchType, orderNumber);
-        this.props.onValueChange(filename, matchType, orderNumber);
+    onMatchValueChange (filename, matchType) {
+        console.log("match", filename, matchType);
+        this.props.onMatchValueChange(filename, matchType);
+    }
+
+    onOrderValueChange (filename, orderNumber) {
+        this.props.onOrderValueChange(filename, orderNumber);
     }
 
     render() {
@@ -28,7 +33,7 @@ class Table extends Component {
                 <tbody>
                     {
                         files.map((file) =>
-                            <TableRow filename={file} numFiles={files.length} onValueChange={this.onHandleChange} />
+                            <TableRow filename={file} numFiles={files.length} onMatchValueChange={this.onMatchValueChange} onOrderValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} />
                         )
                     }
                 </tbody>
