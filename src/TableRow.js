@@ -5,23 +5,17 @@ import DropDownTable from './DropdownTable'
 class TableRow extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            matchValue: "match",
-            orderValue: "1",
-        };
 
         this.onMatchValueChange = this.onMatchValueChange.bind(this);
         this.onOrderValueChange = this.onOrderValueChange.bind(this);
     }
 
     onMatchValueChange(matchValue) {
-        this.setState({matchValue});
-        // this.props.onValueChange(this.props.filename, matchValue, this.state.orderValue);
+        this.props.onMatchValueChange(this.props.filename, matchValue);
     }
 
     onOrderValueChange(orderValue) {
-        this.setState({orderValue});
-        // this.props.onValueChange(this.props.filename, this.state.matchValue, orderValue);
+        this.props.onOrderValueChange(this.props.filename, orderValue);
     }
 
     render() {
@@ -33,8 +27,8 @@ class TableRow extends Component {
         return (
             <tr className="striped--light-gray" >
                 <td className="pv2 ph3">{filename}</td>
-                <td className="pv2 ph3"><DropDownTable selectOptions={["match", "not-match"]} onValueChange={this.onMatchValueChange}/></td>
-                <td className="pv2 ph3"><DropDownTable selectOptions={arr} onValueChange={this.onOrderValueChange}/></td>
+                <td className="pv2 ph3"><DropDownTable selectOptions={["match", "not-match"]} onValueChange={this.onMatchValueChange} resetKey={this.props.resetKey} /></td>
+                <td className="pv2 ph3"><DropDownTable selectOptions={arr} onValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} /></td>
             </tr>
         );
     }
