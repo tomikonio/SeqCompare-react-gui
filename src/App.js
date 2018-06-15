@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Table from './Table';
 import DropdownTable from './DropdownTable';
+import './Center.css';
 
 
 class File {
@@ -95,12 +96,12 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
-        <div className="flex justify-center">
+        <div className="center">
           <label htmlFor="pathChoose" className="pa1">Select a Folder:</label>
           <a class="f6 link dim ba ph3 pv1 mb2 dib black" href="#0" id="pathChoose">Browse...</a>
         </div>
         <br />
-        <div className="flex justify-center">
+        <div className="center">
           <label htmlFor="primary" className="pa1">Select a primary file:</label>
           <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" resetKey="0" />
         </div>
