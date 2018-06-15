@@ -32,10 +32,10 @@ class App extends Component {
     this.orderValueChanged = this.orderValueChanged.bind(this);
   }
 
-  createDict(secondaryFiles, matchType = "match", orderNumber = "1") {
+  createDict(secondaryFiles) {
     const fileDict = {};
     for (let filename of secondaryFiles) {
-      fileDict[filename] = new File(filename, matchType, orderNumber);
+      fileDict[filename] = new File(filename, "match", "1");
     }
     return fileDict;
   }
@@ -50,7 +50,6 @@ class App extends Component {
   matchValueChanged(filename, matchType) {
     const primary = this.state.primaryFile;
     let newFileDict = Object.assign({}, this.state.fileDict);
-    //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
     for (let file in newFileDict) {
       if (newFileDict[file].fileName === filename) {
         newFileDict[file] = new File(filename, matchType, newFileDict[file].orderNumber);
@@ -64,7 +63,6 @@ class App extends Component {
   orderValueChanged (filename, orderNumber) {
     const primary = this.state.primaryFile;
     let newFileDict = Object.assign({}, this.state.fileDict);
-    //delete newFileDict[primary];  // if primary has changed file dict will change accordingly.
     for (let file in newFileDict) {
       if (newFileDict[file].fileName === filename) {
         newFileDict[file] = new File(filename, newFileDict[file].matchType, orderNumber);
@@ -111,36 +109,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-// class Table extends Component {
-//   constructor(props) {
-//       super(props);
-
-//       const filesClassArray = [];
-//       this.props.files.forEach(fileName => {
-//           filesClassArray.push(new File(fileName, "match", "1" ));
-//       });
-
-//       this.state = {
-//           filesState: filesClassArray,
-//       }
-
-//       this.setFileState = this.setFileState.bind(this);
-//   }
-
-//   setFileState(fileName, matchType, orderNumber) {
-
-//       const oldFileArray = [...this.state.filesState];
-
-//       for(let i = 0; i< oldFileArray.length; i++) {
-//           if (this.state.filesState[i].fileName === fileName) {
-//               oldFileArray[i] = { fileName, matchType, orderNumber };
-//               console.log("changed file", oldFileArray[i]);
-//           }
-//       }
-
-//       this.setState({filesState: oldFileArray}, () => {
-//           console.log(this.state.filesState);
-//       });
-//   }
