@@ -95,6 +95,11 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <div>
+          <label htmlFor="pathChoose" className="pa1">Select a Folder:</label>
+          <a class="f6 link dim ba ph3 pv1 mb2 dib black" href="#0">Browse...</a>
+        </div>
+        <br />
         <div className="flex justify-center">
           <label htmlFor="primary" className="pa1">Select a primary file:</label>
           <DropdownTable selectOptions={allFiles} onValueChange={this.primaryFileSelect} id="primary" resetKey="0" />
