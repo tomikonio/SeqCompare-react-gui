@@ -34,7 +34,7 @@ class Table extends Component {
                     <tbody>
                         {
                             files.map((file) =>
-                                <TableRow filename={file} numFiles={files.length} onMatchValueChange={this.onMatchValueChange} onOrderValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} />
+                                <TableRow filename={file} key={file} numFiles={files.length} onMatchValueChange={this.onMatchValueChange} onOrderValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} />
                             )
                         }
                     </tbody>

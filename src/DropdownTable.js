@@ -18,7 +18,7 @@ class DropDownTable extends Component {
             <select defaultValue={this.props.selectOptions[0]} onChange={this.handleChange} key={this.props.resetKey}>
                 {
                     selectOptions.map((selectOption) => 
-                    <option value={selectOption}>
+                    <option key={selectOption} value={selectOption}>
                         {selectOption}
                     </option>
                     )
