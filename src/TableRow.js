@@ -26,7 +26,7 @@ class TableRow extends Component {
 
         return (
             <tr className="striped--light-gray" >
-                <td className="pv2 ph3">{filename}</td>
+                <td className="pv2 ph3 tl">{filename}</td>
                 <td className="pv2 ph3"><DropDownTable selectOptions={["match", "not-match"]} onValueChange={this.onMatchValueChange} resetKey={this.props.resetKey} /></td>
                 <td className="pv2 ph3"><DropDownTable selectOptions={arr} onValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} /></td>
             </tr>
