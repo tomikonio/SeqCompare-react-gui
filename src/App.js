@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import Table from '../react-gui/src/Table';
-import DropdownTable from '../react-gui/src/DropdownTable';
+import Table from './Table';
+import DropdownTable from './DropdownTable';
 // import './Center.css';
 import PythonShell from 'python-shell';
 
@@ -178,8 +178,8 @@ class App extends Component {
       this.setState({ running: true });
       console.log(sentFiles);
       const pythonOptions = {
-        pythonPath: `${__dirname}/../projectSce/venv/bin/python3`,
-        scriptPath: `${__dirname}/../projectSce`,
+        pythonPath: `${__dirname}/../../projectSce/venv/bin/python3`,
+        scriptPath: `${__dirname}/../../projectSce`,
         args: [this.state.primaryFile, sentFiles, this.state.path],
       };
 
