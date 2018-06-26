@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 // import './App.css';
 import Table from './Table';
 import DropdownTable from './DropdownTable';
+const { execFile } = require('child_process');
 // import './Center.css';
-import PythonShell from 'python-shell';
+// import PythonShell from 'python-shell';
 
 const { dialog } = require('electron').remote;
 const fs = require('fs');
@@ -177,22 +178,32 @@ class App extends Component {
       const sentFiles = JSON.stringify(secondaryFiles);
       this.setState({ running: true });
       console.log(sentFiles);
-      const pythonOptions = {
-        pythonPath: `${__dirname}/../../projectSce/venv/bin/python3`,
-        scriptPath: `${__dirname}/../../projectSce`,
-        args: [this.state.primaryFile, sentFiles, this.state.path],
-      };
-
-      const shellPy = PythonShell.run('run_compare.py', pythonOptions, (err, results) => {
-        if (err) throw err;
-        // results is an array consisting of messages collected during execution
-        console.log('results: %j', results);
-      });
-
-      shellPy.on('close', (message) => {
-        console.log(message);
+      const executable = `${__dirname}/../../projectSce/dist/run_compare/run_compare`;
+      const pyArguments = [this.state.primaryFile, sentFiles, this.state.path];
+      
+      const pyChild = execFile(executable, pyArguments, (error, stdout, stderr) => {
+        if (error) {
+          this.setState({ running: false });
+          throw error;
+        }
         this.setState({ running: false });
-      });
+      })
+      // const pythonOptions = {
+      //   pythonPath: `${__dirname}/../../projectSce/venv/bin/python3`,
+      //   scriptPath: `${__dirname}/../../projectSce`,
+      //   args: [this.state.primaryFile, sentFiles, this.state.path],
+      // };
+
+      // const shellPy = PythonShell.run('run_compare.py', pythonOptions, (err, results) => {
+      //   if (err) throw err;
+      //   // results is an array consisting of messages collected during execution
+      //   console.log('results: %j', results);
+      // });
+
+      // shellPy.on('close', (message) => {
+      //   console.log(message);
+      //   this.setState({ running: false });
+      // });
     }
   }
 
