@@ -178,7 +178,7 @@ class App extends Component {
       const sentFiles = JSON.stringify(secondaryFiles);
       this.setState({ running: true });
       console.log(sentFiles);
-      const executable = `${__dirname}/../../projectSce/dist/run_compare/run_compare`;
+      const executable = `${__dirname}/../../run_compare/run_compare`;
       const pyArguments = [this.state.primaryFile, sentFiles, this.state.path];
       
       const pyChild = execFile(executable, pyArguments, (error, stdout, stderr) => {
