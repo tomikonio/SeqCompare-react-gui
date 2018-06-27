@@ -5,6 +5,7 @@ import SeqTable from './SeqTable';
 import DropdownTable from './DropdownTable';
 // import './Center.css';
 import PythonShell from 'python-shell';
+import { Container, Button, Label, Divider, Segment } from 'semantic-ui-react';
 
 const { dialog } = require('electron').remote;
 const fs = require('fs');
@@ -198,7 +199,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App pa3">
+      <Container fluid className='App'>
+      {/* <div className="App"> */}
         {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -206,26 +208,28 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
-        <div className="center">
-          <label htmlFor="pathChoose">
+        <br/>
+        <Container>
+          <Label htmlFor="pathChoose">
             Select a Folder:
-          </label>
-          <button
+          </Label>
+          <Button color='facebook' compact size='tiny'
             href="#0"
             id="pathChoose"
             onClick={this.openDialog}
           >
             Browse...
-          </button>
-        </div>
+          </Button>
+        </Container>
+        <br/>
         <p>
           Selected Folder: <i>{this.state.path}</i>
         </p>
-        <br />
+        <Divider section />
         <div className="center">
-          <label htmlFor="primary">
+          <Label htmlFor="primary">
             Select a primary file:
-          </label>
+          </Label>
           <DropdownTable
             selectOptions={this.state.allFiles}
             onValueChange={this.primaryFileSelect}
@@ -233,7 +237,7 @@ class App extends Component {
           />
         </div>
         <br />
-        <Table
+        <SeqTable
           files={this.state.secondaryFiles}
           onMatchValueChange={this.matchValueChanged}
           onOrderValueChange={this.orderValueChanged}
@@ -241,12 +245,13 @@ class App extends Component {
         />
         <br />
         <div className="center">
-          <button onClick={this.onGoButton}>
+          <Button color='linkedin' onClick={this.onGoButton}>
             GO
-          </button>
+          </Button>
         </div>
         {this.state.running === true ? <p>Running....</p> : null}
-      </div>
+      {/* </div> */}
+      </Container>
     );
   }
 }
