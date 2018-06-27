@@ -185,7 +185,10 @@ class App extends Component {
       };
 
       const shellPy = PythonShell.run('run_compare.py', pythonOptions, (err, results) => {
-        if (err) throw err;
+        if (err) {
+          this.setState({ running: false });
+          throw err;
+        }
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results);
       });
@@ -199,8 +202,8 @@ class App extends Component {
 
   render() {
     return (
-      <Container fluid className='App'>
-      {/* <div className="App"> */}
+      <Container fluid className="App">
+        {/* <div className="App"> */}
         {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -208,12 +211,13 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
-        <br/>
+        <br />
         <Container>
-          <Label htmlFor="pathChoose">
-            Select a Folder:
-          </Label>
-          <Button color='facebook' compact size='tiny'
+          <Label htmlFor="pathChoose">Select a Folder:</Label>
+          <Button
+            color="facebook"
+            compact
+            size="tiny"
             href="#0"
             id="pathChoose"
             onClick={this.openDialog}
@@ -221,15 +225,13 @@ class App extends Component {
             Browse...
           </Button>
         </Container>
-        <br/>
+        <br />
         <p>
           Selected Folder: <i>{this.state.path}</i>
         </p>
         <Divider section />
         <div className="center">
-          <Label htmlFor="primary">
-            Select a primary file:
-          </Label>
+          <Label htmlFor="primary">Select a primary file:</Label>
           <DropdownTable
             selectOptions={this.state.allFiles}
             onValueChange={this.primaryFileSelect}
@@ -245,12 +247,12 @@ class App extends Component {
         />
         <br />
         <div className="center">
-          <Button color='linkedin' onClick={this.onGoButton}>
+          <Button color="linkedin" onClick={this.onGoButton}>
             GO
           </Button>
         </div>
         {this.state.running === true ? <p>Running....</p> : null}
-      {/* </div> */}
+        {/* </div> */}
       </Container>
     );
   }
