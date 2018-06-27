@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import Table from './Table';
+import SeqTable from './SeqTable';
 import DropdownTable from './DropdownTable';
 // import './Center.css';
 import PythonShell from 'python-shell';
@@ -207,11 +207,10 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
         <div className="center">
-          <label htmlFor="pathChoose" className="pa1">
+          <label htmlFor="pathChoose">
             Select a Folder:
           </label>
           <button
-            className="f6 link dim ba ph3 pv1 mb2 dib bg-blue white"
             href="#0"
             id="pathChoose"
             onClick={this.openDialog}
@@ -224,7 +223,7 @@ class App extends Component {
         </p>
         <br />
         <div className="center">
-          <label htmlFor="primary" className="pa1">
+          <label htmlFor="primary">
             Select a primary file:
           </label>
           <DropdownTable
@@ -242,7 +241,7 @@ class App extends Component {
         />
         <br />
         <div className="center">
-          <button className="f6 link dim ba ph3 pv1 mb2 bg-green white" onClick={this.onGoButton}>
+          <button onClick={this.onGoButton}>
             GO
           </button>
         </div>

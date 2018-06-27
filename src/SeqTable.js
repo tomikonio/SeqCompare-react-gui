@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import './App.css';
 import TableRow from './TableRow';
 
-class Table extends Component {
+class SeqTable extends Component {
     constructor(props) {
         super(props);
 
@@ -44,4 +44,4 @@ class Table extends Component {
     }
 }
 
-export default Table;
+export default SeqTable;
