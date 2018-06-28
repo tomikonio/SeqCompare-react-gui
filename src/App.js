@@ -224,11 +224,11 @@ class App extends Component {
         </p> */}
         <br />
         <Container>
-          <Label htmlFor="pathChoose">Select a Folder:</Label>
+          <Label size="large" color="grey" htmlFor="pathChoose">Select a Folder:</Label>
           <Button
-            color="facebook"
+            color="linkedin"
             compact
-            size="tiny"
+            size="medium"
             href="#0"
             id="pathChoose"
             onClick={this.openDialog}
@@ -242,7 +242,7 @@ class App extends Component {
         </p>
         <Divider section />
         <div className="center">
-          <Label htmlFor="primary">Select a primary file:</Label>
+          <Label size="large" htmlFor="primary">Select a primary file:</Label>
           <DropdownTable
             selectOptions={this.state.allFiles}
             onValueChange={this.primaryFileSelect}

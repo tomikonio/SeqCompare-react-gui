@@ -24,7 +24,7 @@ class SeqTable extends Component {
         const files = this.props.files;
         return (
             <Container textAlign='center'>
-                <Table celled striped stackable compact color='blue'>
+                <Table celled striped stackable compact color="blue">
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell collapsing>Filename</Table.HeaderCell>
