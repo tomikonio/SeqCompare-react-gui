@@ -22,7 +22,8 @@ class File {
 function checkIfCompare(folderPath) {
   const files = fs.readdirSync(String(folderPath));
   for (const file of files) {
-    if (file.startsWith('compare')) {
+    let fileStats = fs.statSync(nodePath.join(String(folderPath), file));
+    if ((file.startsWith('compare') || file.startsWith('Compare')) && fileStats.isDirectory()) {
       console.log('compare', file);
       return true;
     }
@@ -150,7 +151,7 @@ class App extends Component {
         }
       } else {
         dialog.showMessageBox({
-          message: `The folder: "${folderPath}" contains a folder/file name "compare_", please remove this folder/file before choosing this location again`,
+          message: `The folder: "${folderPath}" contains a folder named "compare_", please remove this folder before choosing this location again`,
           type: 'warning',
           buttons: ['OK'],
         });
@@ -165,7 +166,15 @@ class App extends Component {
         type: 'info',
         buttons: ['OK'],
       });
-    } else {
+    }
+    else if (checkIfCompare(this.state.path)) {
+      dialog.showMessageBox({
+        message: 'The folder has a "compare_" subfolder, please remove it before use',
+        type: 'info',
+        buttons: ['OK'],
+      });
+    } 
+    else {
       const filedict = this.state.fileDict;
       const secondaryFiles = {};
       for (let i = 1; i < this.state.secondaryFiles.length + 1; i++) {
