@@ -43,6 +43,7 @@ class App extends Component {
       secondaryFiles: [],
       fileDict: {},
       resetKey: '1',
+      primaryReset: '1',
       running: false,
     };
 
@@ -140,6 +141,7 @@ class App extends Component {
               allFiles: fastaFiles,
               fileDict: newFileDict,
               path: folderPath,
+              primaryReset: this.state.primaryReset + '1',
             },
             () => {
               console.log(this.state);
@@ -235,7 +237,7 @@ class App extends Component {
           <DropdownTable
             selectOptions={this.state.allFiles}
             onValueChange={this.primaryFileSelect}
-            id="primary"
+            resetKey={this.state.primaryReset}
           />
         </div>
         <br />
