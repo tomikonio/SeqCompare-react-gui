@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Table, Container } from 'semantic-ui-react';
 // import './App.css';
 import TableRow from './TableRow';
 
-class Table extends Component {
+class SeqTable extends Component {
     constructor(props) {
         super(props);
 
@@ -22,26 +23,26 @@ class Table extends Component {
     render() {
         const files = this.props.files;
         return (
-            <div className="flex justify-center">
-                <table className="collapse ba br2 b--black-10 pv2 ph3" >
-                    <thead>
-                        <tr className="striped--light-gray">
-                            <th className="pv2 ph3 tl f6 fw6 ttu">Filename</th>
-                            <th className="pv2 ph3 tl f6 fw6 ttu">Match/Not-match</th>
-                            <th className="pv2 ph3 tl f6 fw6 ttu">Order</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <Container textAlign='center'>
+                <Table celled striped stackable compact color="blue">
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell collapsing>Filename</Table.HeaderCell>
+                            <Table.HeaderCell collapsing>Match/Not-match</Table.HeaderCell>
+                            <Table.HeaderCell collapsing>Order</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {
                             files.map((file) =>
                                 <TableRow filename={file} key={file} numFiles={files.length} onMatchValueChange={this.onMatchValueChange} onOrderValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} />
                             )
                         }
-                    </tbody>
-                </table>
-            </div>
+                    </Table.Body>
+                </Table>
+            </Container>
         );
     }
 }
 
-export default Table;
+export default SeqTable;

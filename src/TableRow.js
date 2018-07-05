@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'semantic-ui-react';
 // import './App.css';
 import DropDownTable from './DropdownTable'
 
@@ -25,11 +26,11 @@ class TableRow extends Component {
         arr.shift();
 
         return (
-            <tr className="striped--light-gray" >
-                <td className="pv2 ph3 tl">{filename}</td>
-                <td className="pv2 ph3"><DropDownTable selectOptions={["match", "not-match"]} onValueChange={this.onMatchValueChange} resetKey={this.props.resetKey} /></td>
-                <td className="pv2 ph3"><DropDownTable selectOptions={arr} onValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} /></td>
-            </tr>
+            <Table.Row>
+                <Table.Cell collapsing>{filename}</Table.Cell>
+                <Table.Cell collapsing><DropDownTable selectOptions={["match", "not-match"]} onValueChange={this.onMatchValueChange} resetKey={this.props.resetKey} /></Table.Cell>
+                <Table.Cell collapsing><DropDownTable selectOptions={arr} onValueChange={this.onOrderValueChange} resetKey={this.props.resetKey} /></Table.Cell>
+            </Table.Row>
         );
     }
 }

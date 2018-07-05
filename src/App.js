@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import Table from '../react-gui/src/Table';
-import DropdownTable from '../react-gui/src/DropdownTable';
+import SeqTable from './SeqTable';
+import DropdownTable from './DropdownTable';
 // import './Center.css';
 import PythonShell from 'python-shell';
+import { Container, Button, Label, Divider, Segment } from 'semantic-ui-react';
 
 const { dialog } = require('electron').remote;
 const fs = require('fs');
@@ -21,7 +22,8 @@ class File {
 function checkIfCompare(folderPath) {
   const files = fs.readdirSync(String(folderPath));
   for (const file of files) {
-    if (file.startsWith('compare')) {
+    let fileStats = fs.statSync(nodePath.join(String(folderPath), file));
+    if ((file.startsWith('compare') || file.startsWith('Compare')) && fileStats.isDirectory()) {
       console.log('compare', file);
       return true;
     }
@@ -42,6 +44,7 @@ class App extends Component {
       secondaryFiles: [],
       fileDict: {},
       resetKey: '1',
+      primaryReset: '1',
       running: false,
     };
 
@@ -139,6 +142,7 @@ class App extends Component {
               allFiles: fastaFiles,
               fileDict: newFileDict,
               path: folderPath,
+              primaryReset: this.state.primaryReset + '1',
             },
             () => {
               console.log(this.state);
@@ -147,7 +151,7 @@ class App extends Component {
         }
       } else {
         dialog.showMessageBox({
-          message: `The folder: "${folderPath}" contains a folder/file name "compare_", please remove this folder/file before choosing this location again`,
+          message: `The folder: "${folderPath}" contains a folder named "compare_", please remove this folder before choosing this location again`,
           type: 'warning',
           buttons: ['OK'],
         });
@@ -162,7 +166,15 @@ class App extends Component {
         type: 'info',
         buttons: ['OK'],
       });
-    } else {
+    }
+    else if (checkIfCompare(this.state.path)) {
+      dialog.showMessageBox({
+        message: 'The folder has a "compare_" subfolder, please remove it before use',
+        type: 'info',
+        buttons: ['OK'],
+      });
+    } 
+    else {
       const filedict = this.state.fileDict;
       const secondaryFiles = {};
       for (let i = 1; i < this.state.secondaryFiles.length + 1; i++) {
@@ -178,13 +190,16 @@ class App extends Component {
       this.setState({ running: true });
       console.log(sentFiles);
       const pythonOptions = {
-        pythonPath: `${__dirname}/../projectSce/venv/bin/python3`,
-        scriptPath: `${__dirname}/../projectSce`,
+        pythonPath: `${__dirname}/../../projectSce/venv/bin/python3`,
+        scriptPath: `${__dirname}/../../projectSce`,
         args: [this.state.primaryFile, sentFiles, this.state.path],
       };
 
       const shellPy = PythonShell.run('run_compare.py', pythonOptions, (err, results) => {
-        if (err) throw err;
+        if (err) {
+          this.setState({ running: false });
+          throw err;
+        }
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results);
       });
@@ -198,7 +213,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App pa3">
+      <Container fluid className="App">
+        {/* <div className="App"> */}
         {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -206,35 +222,35 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
-        <div className="center">
-          <label htmlFor="pathChoose" className="pa1">
-            Select a Folder:
-          </label>
-          <button
-            className="f6 link dim ba ph3 pv1 mb2 dib bg-blue white"
+        <br />
+        <Container>
+          <Label size="large" color="grey" htmlFor="pathChoose">Select a Folder:</Label>
+          <Button
+            color="linkedin"
+            compact
+            size="medium"
             href="#0"
             id="pathChoose"
             onClick={this.openDialog}
           >
             Browse...
-          </button>
-        </div>
+          </Button>
+        </Container>
+        <br />
         <p>
           Selected Folder: <i>{this.state.path}</i>
         </p>
-        <br />
+        <Divider section />
         <div className="center">
-          <label htmlFor="primary" className="pa1">
-            Select a primary file:
-          </label>
+          <Label size="large" htmlFor="primary">Select a primary file:</Label>
           <DropdownTable
             selectOptions={this.state.allFiles}
             onValueChange={this.primaryFileSelect}
-            id="primary"
+            resetKey={this.state.primaryReset}
           />
         </div>
         <br />
-        <Table
+        <SeqTable
           files={this.state.secondaryFiles}
           onMatchValueChange={this.matchValueChanged}
           onOrderValueChange={this.orderValueChanged}
@@ -242,12 +258,13 @@ class App extends Component {
         />
         <br />
         <div className="center">
-          <button className="f6 link dim ba ph3 pv1 mb2 bg-green white" onClick={this.onGoButton}>
+          <Button color="linkedin" onClick={this.onGoButton}>
             GO
-          </button>
+          </Button>
         </div>
         {this.state.running === true ? <p>Running....</p> : null}
-      </div>
+        {/* </div> */}
+      </Container>
     );
   }
 }
